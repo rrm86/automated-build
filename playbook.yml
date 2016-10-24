@@ -1,5 +1,9 @@
 - name: Run docker-compose
-  hosts: localhost
+  hosts: pirpedro.com.br
+  remote_user: root
+  vars_files:
+    - vars/vars.yml
+    - vars/vault.yml
   tasks:
     - name: Mensagem
       docker_service:
@@ -10,7 +14,7 @@
             db:
               image: mysql:5.7
               volumes:
-                - "{{playbook_dir}}/.data/db:/var/lib/mysql"
+                - "{{ansible_env.HOME}}/.data/db:/var/lib/mysql"
               environment:
                 MYSQL_ROOT_PASSWORD: "{{pass}}"
                 MYSQL_DATABASE: wordpress
